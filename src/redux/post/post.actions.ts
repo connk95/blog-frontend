@@ -6,3 +6,12 @@ export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
 
   return res.data;
 });
+
+export const fetchSinglePost = createAsyncThunk(
+  "posts/fetchSinglePost",
+  async () => {
+    const res = await axios.get("http://localhost:3000/posts/:id");
+
+    return res.data;
+  }
+);

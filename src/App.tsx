@@ -1,66 +1,47 @@
-import { lazy, useEffect } from "react";
-import { Provider } from "react-redux";
+import { useEffect } from "react";
+import { Provider, useSelector } from "react-redux";
 import { Grid, Card, Typography, CardContent } from "@mui/material";
-import { Route, Router, Switch } from "react-router";
 import { Link } from "react-router-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { useAppDispatch } from "./redux/hooks";
 import { fetchPosts } from "./redux/post/post.actions";
 import { store } from "./redux/store";
-
-// const LoginPage = lazy(() =>
-//   import("./pages/LoginPage").then((module) => ({
-//     default: module.LoginPage,
-//   }))
-// );
-
-const PostPage = lazy(() =>
-  import("./pages/PostPage").then((module) => ({
-    default: module.PostPage,
-  }))
-);
-
-// const UserPage = lazy(() =>
-//   import("./pages/UserPage").then((module) => ({
-//     default: module.UserPage,
-//   }))
-// );
+import { RootState } from "./redux/store";
 
 export const App = (): JSX.Element => {
+  const posts = useSelector((state: RootState) => state.posts);
+
   const dispatch = useAppDispatch();
-
-  const posts = store.getState().posts;
-
-  console.log(posts);
-
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
+  console.log(posts.allPosts);
+
   return (
-    // <Router>
     <Provider store={store}>
       <Grid container direction="column" alignItems="center">
         <Grid item>
           <Typography>Posts</Typography>
+          {posts.loading ? <Typography>Loading...</Typography> : <></>}
           {posts.allPosts.map((post) => (
-            <Card key={post.id}>
-              <Link to={`/posts/${post.id}`}>
+            <Link to={`/posts/${post._id}`}>
+              <Card key={post._id}>
                 <CardContent>
                   <Typography>{post.title}</Typography>
                   <Typography>{post.text}</Typography>
                   <Typography>
-                    posted at {post.createdAt.toISOString()} by {post.user}
+                    posted at {post.createdAt.slice(11, 19)} on{" "}
+                    {post.createdAt.slice(0, 10)}
                   </Typography>
+                  <Typography>by {post.user.username}</Typography>
                 </CardContent>
-              </Link>
-            </Card>
+              </Card>
+            </Link>
           ))}
         </Grid>
       </Grid>
     </Provider>
-    // </Router>
   );
 };
 

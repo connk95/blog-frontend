@@ -1,16 +1,15 @@
-export interface Post {
-  id: string;
+import { baseMongooseType, baseState } from "../types";
+import { User } from "../user/user.type";
+
+export interface Post extends baseMongooseType {
   title: string;
   text: string;
-  user: string;
+  user: User;
   likes: [];
   comments: [];
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export interface PostState {
+export interface PostState extends baseState {
   allPosts: Post[];
-  error: string;
-  loading: boolean;
+  singlePost: object;
 }
