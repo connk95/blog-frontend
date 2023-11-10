@@ -9,9 +9,20 @@ export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
 
 export const fetchSinglePost = createAsyncThunk(
   "posts/fetchSinglePost",
-  async () => {
+  async (id: string) => {
     const res = await axios.get(`http://localhost:3000/posts/${id}`);
 
     return res.data;
   }
 );
+
+// export const fetchPosts = createAsyncThunk(
+//   "posts/fetchPosts",
+//   async (id: string) => {
+//     const res = await axios.get(
+//       id ? `http://localhost:3000/${id}` : "http://localhost:3000/posts"
+//     );
+
+//     return res;
+//   }
+// );

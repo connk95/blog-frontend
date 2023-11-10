@@ -12,11 +12,11 @@ export const PostPage = (): JSX.Element => {
   const { id } = useParams();
   const post = useSelector((state: RootState) => state.posts.singlePost);
 
-  console.log(id);
+  console.log(post);
 
   useEffect(() => {
-    dispatch(fetchSinglePost(id));
-  }, [dispatch]);
+    dispatch(fetchSinglePost(id!));
+  }, [dispatch, id]);
 
   return (
     <Grid container direction="column" alignItems="center">
