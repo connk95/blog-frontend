@@ -5,7 +5,7 @@ import { Post } from "./post.type";
 
 const initialState: PostState = {
   allPosts: [],
-  singlePost: {},
+  singlePost: <Post>{},
   error: "",
   loading: false,
 };
@@ -19,20 +19,20 @@ const postSlice = createSlice({
       fetchPosts.fulfilled,
       (state, action: PayloadAction<Post[]>) => {
         state.allPosts = action.payload;
-        state.singlePost = {};
+        state.singlePost = <Post>{};
         state.error = "";
         state.loading = false;
       }
     );
     builder.addCase(fetchPosts.pending, (state) => {
       state.allPosts = [];
-      state.singlePost = {};
+      state.singlePost = <Post>{};
       state.error = "";
       state.loading = true;
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {
       state.allPosts = [];
-      state.singlePost = {};
+      state.singlePost = <Post>{};
       state.error = action.error.message || "Could not load posts";
       state.loading = false;
     });
@@ -47,13 +47,13 @@ const postSlice = createSlice({
     );
     builder.addCase(fetchSinglePost.pending, (state) => {
       state.allPosts = [];
-      state.singlePost = {};
+      state.singlePost = <Post>{};
       state.error = "";
       state.loading = true;
     });
     builder.addCase(fetchSinglePost.rejected, (state, action) => {
       state.allPosts = [];
-      state.singlePost = {};
+      state.singlePost = <Post>{};
       state.error = action.error.message || "Could not load post";
       state.loading = false;
     });

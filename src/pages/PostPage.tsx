@@ -1,19 +1,22 @@
-import { Redirect } from "react-router";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useAppDispatch } from "../redux/hooks";
 
 import { RootState } from "../redux/store";
-import { fetchPosts } from "../redux/post/post.actions";
+import { fetchSinglePost } from "../redux/post/post.actions";
+import { useParams } from "react-router";
 
-export const PostPage = (
-  props: RouteComponentProps<{ id: string }>
-): JSX.Element => {
-  const { id } = props.match.params;
-  const { post } = useSelector((state: RootState) => ({
-    post: selectPost(state, id),
-  }));
+export const PostPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const post = useSelector((state: RootState) => state.posts.singlePost);
+
+  console.log(id);
+
+  useEffect(() => {
+    dispatch(fetchSinglePost(id));
+  }, [dispatch]);
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -31,3 +34,5 @@ export const PostPage = (
     </Grid>
   );
 };
+
+export default PostPage;

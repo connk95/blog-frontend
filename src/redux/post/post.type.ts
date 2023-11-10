@@ -11,5 +11,5 @@ export interface Post extends baseMongooseType {
 
 export interface PostState extends baseState {
   allPosts: Post[];
-  singlePost: object;
+  singlePost: Post;
 }

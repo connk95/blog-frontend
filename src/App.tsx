@@ -1,47 +1,68 @@
-import { useEffect } from "react";
-import { Provider, useSelector } from "react-redux";
-import { Grid, Card, Typography, CardContent } from "@mui/material";
-import { Link } from "react-router-dom";
-import "./App.css";
-import { useAppDispatch } from "./redux/hooks";
-import { fetchPosts } from "./redux/post/post.actions";
-import { store } from "./redux/store";
-import { RootState } from "./redux/store";
+// import { useEffect } from "react";
+// import { Provider, useSelector } from "react-redux";
+// import { Grid, Card, Typography, CardContent } from "@mui/material";
+// import { Link } from "react-router-dom";
+// import { useAppDispatch } from "./redux/hooks";
 
-export const App = (): JSX.Element => {
-  const posts = useSelector((state: RootState) => state.posts);
+// import "./App.css";
+// import { fetchPosts } from "./redux/post/post.actions";
+// import { store } from "./redux/store";
+// import { RootState } from "./redux/store";
 
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+// export const App = (): JSX.Element => {
+//   const posts = useSelector((state: RootState) => state.posts);
 
-  console.log(posts.allPosts);
+//   const dispatch = useAppDispatch();
+//   useEffect(() => {
+//     dispatch(fetchPosts());
+//   }, [dispatch]);
 
+//   console.log(posts.allPosts);
+
+//   return (
+//     <Provider store={store}>
+//       <Grid container direction="column" alignItems="center">
+//         <Grid item>
+//           <Typography>Posts</Typography>
+//           {posts.loading ? <Typography>Loading...</Typography> : <></>}
+//           {posts.allPosts.map((post) => (
+//             <Link to={`/posts/${post._id}`} key={post._id}>
+//               <Card>
+//                 <CardContent>
+//                   <Typography>{post.title}</Typography>
+//                   <Typography>{post.text}</Typography>
+//                   <Typography>
+//                     posted at {post.createdAt.slice(11, 19)} on{" "}
+//                     {post.createdAt.slice(0, 10)}
+//                   </Typography>
+//                   <Typography>by {post.user.username}</Typography>
+//                 </CardContent>
+//               </Card>
+//             </Link>
+//           ))}
+//         </Grid>
+//       </Grid>
+//     </Provider>
+//   );
+// };
+
+// export default App;
+
+// import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import PostPage from "./pages/PostPage";
+
+const App = () => {
   return (
-    <Provider store={store}>
-      <Grid container direction="column" alignItems="center">
-        <Grid item>
-          <Typography>Posts</Typography>
-          {posts.loading ? <Typography>Loading...</Typography> : <></>}
-          {posts.allPosts.map((post) => (
-            <Link to={`/posts/${post._id}`}>
-              <Card key={post._id}>
-                <CardContent>
-                  <Typography>{post.title}</Typography>
-                  <Typography>{post.text}</Typography>
-                  <Typography>
-                    posted at {post.createdAt.slice(11, 19)} on{" "}
-                    {post.createdAt.slice(0, 10)}
-                  </Typography>
-                  <Typography>by {post.user.username}</Typography>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </Grid>
-      </Grid>
-    </Provider>
+    // uses React Router v6
+    <Router>
+      {/* <NavBar /> */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="posts/:id" element={<PostPage />} />
+      </Routes>
+    </Router>
   );
 };
 
