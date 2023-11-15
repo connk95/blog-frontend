@@ -1,67 +1,28 @@
-// import { useEffect } from "react";
-// import { Provider, useSelector } from "react-redux";
-// import { Grid, Card, Typography, CardContent } from "@mui/material";
-// import { Link } from "react-router-dom";
-// import { useAppDispatch } from "./redux/hooks";
-
-// import "./App.css";
-// import { fetchPosts } from "./redux/post/post.actions";
-// import { store } from "./redux/store";
-// import { RootState } from "./redux/store";
-
-// export const App = (): JSX.Element => {
-//   const posts = useSelector((state: RootState) => state.posts);
-
-//   const dispatch = useAppDispatch();
-//   useEffect(() => {
-//     dispatch(fetchPosts());
-//   }, [dispatch]);
-
-//   console.log(posts.allPosts);
-
-//   return (
-//     <Provider store={store}>
-//       <Grid container direction="column" alignItems="center">
-//         <Grid item>
-//           <Typography>Posts</Typography>
-//           {posts.loading ? <Typography>Loading...</Typography> : <></>}
-//           {posts.allPosts.map((post) => (
-//             <Link to={`/posts/${post._id}`} key={post._id}>
-//               <Card>
-//                 <CardContent>
-//                   <Typography>{post.title}</Typography>
-//                   <Typography>{post.text}</Typography>
-//                   <Typography>
-//                     posted at {post.createdAt.slice(11, 19)} on{" "}
-//                     {post.createdAt.slice(0, 10)}
-//                   </Typography>
-//                   <Typography>by {post.user.username}</Typography>
-//                 </CardContent>
-//               </Card>
-//             </Link>
-//           ))}
-//         </Grid>
-//       </Grid>
-//     </Provider>
-//   );
-// };
-
-// export default App;
-
-// import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import Header from "./components/header";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
+import { store } from "./redux/store";
+import { Container } from "@mui/material";
+import { SignUp } from "./pages/SignUpPage";
+import { Login } from "./pages/LoginPage";
 
 const App = () => {
   return (
     // uses React Router v6
     <Router>
-      {/* <NavBar /> */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="posts/:id" element={<PostPage />} />
-      </Routes>
+      <Provider store={store}>
+        <Header />
+        <Container maxWidth={false} sx={{ height: "100vh", width: "100vw" }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="posts/:id" element={<PostPage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </Container>
+      </Provider>
     </Router>
   );
 };

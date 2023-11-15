@@ -2,6 +2,7 @@ import { baseMongooseType, baseState } from "../types";
 import { User } from "../user/user.type";
 
 export interface Post extends baseMongooseType {
+  id: string;
   title: string;
   text: string;
   user: User;
