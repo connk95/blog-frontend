@@ -32,9 +32,9 @@ export const HomePage = (): JSX.Element => {
       {posts.loading ? <CircularProgress /> : <></>}
       {posts.allPosts.map((post) => (
         <Link to={`/posts/${post._id}`} key={post._id}>
-          <Card sx={{ p: 1, m: 2 }}>
+          <Card sx={{ p: 1, m: 2, width: "60vw" }}>
             <CardContent>
-              <Typography>{post.title}</Typography>
+              <Typography sx={{ fontWeight: "bold" }}>{post.title}</Typography>
               <Typography>{post.text}</Typography>
               <Typography>
                 posted at {post.createdAt.slice(11, 19)} on{" "}

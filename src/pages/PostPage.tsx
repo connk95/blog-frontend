@@ -36,9 +36,11 @@ export const PostPage = (): JSX.Element => {
           // <Typography>Loading...</Typography>
           <CircularProgress />
         ) : posts.singlePost.title ? (
-          <Card>
+          <Card sx={{ p: 1, m: 2, width: "60vw" }}>
             <CardContent>
-              <Typography>{posts.singlePost.title}</Typography>
+              <Typography sx={{ fontWeight: "bold" }}>
+                {posts.singlePost.title}
+              </Typography>
               <Typography>{posts.singlePost.text}</Typography>
               <Typography>
                 posted at {posts.singlePost.createdAt.slice(11, 19)} on{" "}

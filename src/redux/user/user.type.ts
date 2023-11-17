@@ -1,14 +1,21 @@
-import { baseMongooseType, baseState } from "../types";
+import { baseState } from "../types";
 
-export interface User extends baseMongooseType {
+export interface User {
   username: string;
   password: string;
-  emaik: string;
-  posts: [];
-  likes: [];
-  comments: [];
+  email: string;
+  posts?: [];
+  likes?: [];
+  comments?: [];
+}
+
+export interface NewUser {
+  username: string;
+  password: string;
+  email: string;
 }
 
 export interface UserState extends baseState {
-  loggedInUser: object;
+  loggedInUser: User;
+  newUser: NewUser;
 }

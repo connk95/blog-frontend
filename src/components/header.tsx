@@ -23,7 +23,9 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to={"/"}>Connor's Blog</Link>
+            <Link to={"/"} style={{ color: "white" }}>
+              Connor's Blog
+            </Link>
           </Typography>
           <Button color="inherit" href="/login">
             Login

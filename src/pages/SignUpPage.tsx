@@ -1,4 +1,3 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,18 +11,38 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useAppDispatch } from "../redux/hooks";
+import { User } from "../redux/user/user.type";
+import { createUser } from "../redux/user/user.actions";
+// import { useEffect } from "react";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export const SignUp = (): JSX.Element => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const formData = new FormData(event.currentTarget);
+
+    const userData: User = {
+      username: formData.get("username")?.toString() || "username",
+      password: formData.get("password")?.toString() || "password",
+      email: formData.get("email")?.toString() || "email",
+      //   posts: [],
+      //   likes: [],
+      //   comments: [],
+    };
+
+    if (
+      userData.username !== "username" &&
+      userData.password !== "password" &&
+      userData.email !== "email"
+    ) {
+      dispatch(createUser(userData));
+    } else {
+      console.log("create use failed");
+    }
   };
 
   return (
