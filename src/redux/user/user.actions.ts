@@ -15,9 +15,6 @@ export const createUser = createAsyncThunk(
       username,
       email,
       password,
-      //   posts: [],
-      //   likes: [],
-      //   comments: [],
     });
 
     return res.data;
