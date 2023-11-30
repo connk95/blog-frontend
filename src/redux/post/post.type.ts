@@ -1,13 +1,14 @@
 import { baseMongooseType, baseState } from "../types";
 import { User } from "../user/user.type";
+import { Comment } from "./comment.type";
 
 export interface Post extends baseMongooseType {
   id: string;
   title: string;
   text: string;
   user: User;
-  likes: [];
-  comments: [];
+  likes: User[];
+  comments: Comment[];
 }
 
 export interface PostState extends baseState {

@@ -5,6 +5,8 @@ import {
   Grid,
   Typography,
   CircularProgress,
+  TextField,
+  Button,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -30,12 +32,11 @@ export const PostPage = (): JSX.Element => {
   }, [dispatch, id]);
 
   return (
-    <Grid container direction="column" alignItems="center">
-      <Grid item>
-        {posts.loading ? (
-          // <Typography>Loading...</Typography>
-          <CircularProgress />
-        ) : posts.singlePost.title ? (
+    <Grid container flexDirection="column" alignItems="center">
+      {posts.loading ? (
+        <CircularProgress />
+      ) : posts.singlePost.title ? (
+        <Grid item>
           <Card sx={{ p: 1, m: 2, width: "60vw" }}>
             <CardContent>
               <Typography sx={{ fontWeight: "bold" }}>
@@ -49,10 +50,39 @@ export const PostPage = (): JSX.Element => {
               <Typography>by {posts.singlePost.user.username}</Typography>
             </CardContent>
           </Card>
-        ) : (
-          <Typography>Post not found</Typography>
-        )}
-      </Grid>
+          {posts.singlePost.comments.length > 0 ? (
+            <Card sx={{ p: 1, m: 2, width: "60vw " }}>
+              {posts.singlePost.comments.map((comment) => (
+                <CardContent key={comment.id}>
+                  <Typography>{comment.text}</Typography>;
+                  <Typography>
+                    posted at {comment.createdAt.slice(11, 19)} on{" "}
+                    {comment.createdAt.slice(0, 10)}
+                  </Typography>
+                  ;
+                </CardContent>
+              ))}
+            </Card>
+          ) : (
+            <Typography sx={{ mx: 2.5 }}>
+              Be the first to leave a comment!
+            </Typography>
+          )}
+          <Grid container direction={"column"} sx={{ alignItems: "flex-end" }}>
+            <TextField
+              id="outlined-basic"
+              label="Comment"
+              variant="outlined"
+              sx={{ m: 2, width: "61vw" }}
+            />
+            <Button variant="contained" sx={{ width: 90, mx: 2 }}>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      ) : (
+        <Typography>Post not found</Typography>
+      )}
     </Grid>
   );
 };

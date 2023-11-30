@@ -1,11 +1,23 @@
-// import { baseState } from "../types";
+import { baseState } from "../types";
+import { User } from "../user/user.type";
 
-// export interface User {
-//   username: string;
-//   password: string;
-//   email: string;
-// }
+export interface NewUser {
+  username: string;
+  password: string;
+  email: string;
+}
 
-// export interface AuthUser extends baseState {
-//     authUser:
-// }
+export interface AuthState extends baseState {
+  loggedInUser: LoggedInUser;
+  newUser: NewUser;
+}
+
+export interface LoggedInUser {
+  access_token: string;
+  user: User;
+}
+
+export interface UserLoginData {
+  username: string;
+  password: string;
+}

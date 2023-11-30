@@ -2,8 +2,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,14 +10,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch } from "../redux/hooks";
-// import { User } from "../redux/user/user.type";
-import { createUser } from "../redux/user/user.actions";
-// import { useEffect } from "react";
+import { createUser } from "../redux/auth/auth.actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { CircularProgress } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const defaultTheme = createTheme();
 
@@ -31,29 +27,8 @@ interface SignUpFormInput {
 
 export const SignUp = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.users);
-  //   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault();
-  //     const formData = new FormData(event.currentTarget);
-
-  //     const userData: User = {
-  //       username: formData.get("username")?.toString() || "username",
-  //       password: formData.get("password")?.toString() || "password",
-  //       email: formData.get("email")?.toString() || "email",
-  //     };
-
-  //     if (
-  //       userData.username !== "username" &&
-  //       userData.password !== "password" &&
-  //       userData.email !== "email"
-  //     ) {
-  //       await dispatch(createUser(userData));
-  //     } else {
-  //       console.log("create use failed");
-  //     }
-  //     return userData;
-  //   };
-
   const {
     register,
     handleSubmit,
@@ -62,8 +37,7 @@ export const SignUp = (): JSX.Element => {
 
   const onSubmit: SubmitHandler<SignUpFormInput> = async (data) => {
     await dispatch(createUser(data));
-
-    return useNavigate("/");
+    navigate("/");
   };
 
   return (

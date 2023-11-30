@@ -1,4 +1,3 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,8 +6,25 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+// import { useAppDispatch } from "../redux/hooks";
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../redux/hooks";
+import { userLogout } from "../redux/auth/auth.actions";
+// import { useEffect } from "react";
 
-export default function ButtonAppBar() {
+export const ButtonAppBar = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const auth = useSelector((state: RootState) => state.auth);
+
+  const onClick = async () => {
+    // const data = { auth.loggedInUser.user.username, auth.loggedInUser.user.password }
+    // await dispatch(userLogout(data));
+    navigate("/");
+  };
+
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
       <AppBar position="static">
@@ -27,14 +43,32 @@ export default function ButtonAppBar() {
               Connor's Blog
             </Link>
           </Typography>
-          <Button color="inherit" href="/login">
-            Login
-          </Button>
-          <Button color="inherit" href="/signup">
-            Create Account
-          </Button>
+          {auth.loggedInUser.user ? (
+            <>
+              <Typography sx={{ mr: 4 }}>
+                Welcome back {auth.loggedInUser.user.username}!
+              </Typography>
+              <Button color="inherit" href="/profile">
+                My Profile
+              </Button>
+              <Button color="inherit" onClick={onClick}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" href="/login">
+                Login
+              </Button>
+              <Button color="inherit" href="/signup">
+                Create Account
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};
+
+export default ButtonAppBar;

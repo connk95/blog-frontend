@@ -27,8 +27,9 @@ export const HomePage = (): JSX.Element => {
     // <Provider store={store}>
     // <Container maxWidth={false}>
     <Grid container direction="column" alignItems="center">
-      <Typography sx={{ alignContent: "center" }}>Posts</Typography>
-      {/* {posts.loading ? <Typography>Loading...</Typography> : <></>} */}
+      <Typography variant="h4" sx={{ alignContent: "center" }}>
+        All posts
+      </Typography>
       {posts.loading ? <CircularProgress /> : <></>}
       {posts.allPosts.map((post) => (
         <Link to={`/posts/${post._id}`} key={post._id}>
