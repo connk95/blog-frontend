@@ -20,8 +20,11 @@ export const ButtonAppBar = (): JSX.Element => {
   const auth = useSelector((state: RootState) => state.auth);
 
   const onClick = async () => {
-    // const data = { auth.loggedInUser.user.username, auth.loggedInUser.user.password }
-    // await dispatch(userLogout(data));
+    const data = {
+      username: auth.loggedInUser.user.username,
+      password: auth.loggedInUser.user.password,
+    };
+    await dispatch(userLogout(data));
     navigate("/");
   };
 
@@ -40,7 +43,7 @@ export const ButtonAppBar = (): JSX.Element => {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/"} style={{ color: "white" }}>
-              Connor's Blog
+              Home
             </Link>
           </Typography>
           {auth.loggedInUser.user ? (
@@ -51,7 +54,7 @@ export const ButtonAppBar = (): JSX.Element => {
               <Button color="inherit" href="/profile">
                 My Profile
               </Button>
-              <Button color="inherit" onClick={onClick}>
+              <Button color="inherit" href="/" onClick={onClick}>
                 Logout
               </Button>
             </>

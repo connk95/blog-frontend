@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { PostState, Post } from "./post.type";
-import { fetchPosts, fetchSinglePost } from "./post.actions";
+import { fetchPosts, fetchSinglePost, newPost } from "./post.actions";
 
 const initialState: PostState = {
   allPosts: [],
@@ -54,6 +54,18 @@ const postSlice = createSlice({
       state.allPosts = [];
       state.singlePost = <Post>{};
       state.error = action.error.message || "Could not load post";
+      state.loading = false;
+    });
+    builder.addCase(newPost.fulfilled, (state) => {
+      state.error = "";
+      state.loading = false;
+    });
+    builder.addCase(newPost.pending, (state) => {
+      state.error = "";
+      state.loading = true;
+    });
+    builder.addCase(newPost.rejected, (state, action) => {
+      state.error = action.error.message || "Could not create post";
       state.loading = false;
     });
   },

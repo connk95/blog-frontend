@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 import { Container } from "@mui/material";
 import { SignUp } from "./pages/SignUpPage";
 import { Login } from "./pages/LoginPage";
+import { NewPost } from "./pages/NewPost";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="posts/:id" element={<PostPage />} />
+            <Route path="posts/new" element={<NewPost />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
           </Routes>

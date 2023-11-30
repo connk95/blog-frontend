@@ -11,17 +11,10 @@ export const fetchSinglePost = createAsyncThunk(
 
 export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
   const res = await axios.get("http://localhost:3000/posts");
-
   return res.data;
 });
 
-// export const fetchPosts = createAsyncThunk(
-//   "posts/fetchPosts",
-//   async (id: string) => {
-//     const res = await axios.get(
-//       id ? `http://localhost:3000/${id}` : "http://localhost:3000/posts"
-//     );
-
-//     return res;
-//   }
-// );
+export const newPost = createAsyncThunk("posts/newPost", async (data) => {
+  const res = await axios.post("http://localhost:3000/posts", { data });
+  return res;
+});

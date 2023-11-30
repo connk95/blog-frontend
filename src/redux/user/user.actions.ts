@@ -4,7 +4,6 @@ import { User } from "./user.type";
 
 export const fetchUser = createAsyncThunk("users/fetchUser", async () => {
   const res = await axios.get("http://localhost:3000/users");
-
   return res.data;
 });
 
@@ -16,7 +15,6 @@ export const createUser = createAsyncThunk(
       email,
       password,
     });
-
     return res.data;
   }
 );

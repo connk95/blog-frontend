@@ -13,14 +13,3 @@ export interface User {
 export interface UserState extends baseState {
   user: User;
 }
-
-// export interface NewUser {
-//   username: string;
-//   password: string;
-//   email: string;
-// }
-
-// export interface UserState extends baseState {
-//   loggedInUser: User;
-//   newUser: NewUser;
-// }

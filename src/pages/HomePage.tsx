@@ -6,13 +6,12 @@ import {
   Typography,
   CardContent,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// import "./App.css";
 import { useAppDispatch } from "../redux/hooks";
 import { fetchPosts } from "../redux/post/post.actions";
-// import { store } from "../redux/store";
 import { RootState } from "../redux/store";
 
 export const HomePage = (): JSX.Element => {
@@ -24,12 +23,24 @@ export const HomePage = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    // <Provider store={store}>
-    // <Container maxWidth={false}>
     <Grid container direction="column" alignItems="center">
-      <Typography variant="h4" sx={{ alignContent: "center" }}>
-        All posts
-      </Typography>
+      <Grid
+        container
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="h4" sx={{ alignContent: "center" }}>
+          All posts
+        </Typography>
+        <Button
+          variant="contained"
+          href="/posts/new"
+          sx={{ width: 120, mx: 2 }}
+        >
+          New Post
+        </Button>
+      </Grid>
       {posts.loading ? <CircularProgress /> : <></>}
       {posts.allPosts.map((post) => (
         <Link to={`/posts/${post._id}`} key={post._id}>
@@ -47,8 +58,6 @@ export const HomePage = (): JSX.Element => {
         </Link>
       ))}
     </Grid>
-    // </Container>
-    // </Provider>
   );
 };
 

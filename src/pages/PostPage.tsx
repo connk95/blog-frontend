@@ -16,13 +16,8 @@ import { fetchSinglePost } from "../redux/post/post.actions";
 import { useParams } from "react-router";
 
 export const PostPage = (): JSX.Element => {
-  console.log("PostPage rendered");
   const { id } = useParams();
   const posts = useSelector((state: RootState) => state.posts);
-
-  console.log("ID:", id);
-  console.log("Posts State:", posts);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
