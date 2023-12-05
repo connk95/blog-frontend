@@ -46,7 +46,7 @@ export const ButtonAppBar = (): JSX.Element => {
               Home
             </Link>
           </Typography>
-          {auth.loggedInUser.user ? (
+          {auth.loggedInUser.access_token ? (
             <>
               <Typography sx={{ mr: 4 }}>
                 Welcome back {auth.loggedInUser.user.username}!

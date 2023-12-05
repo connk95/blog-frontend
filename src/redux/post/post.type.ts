@@ -3,12 +3,12 @@ import { User } from "../user/user.type";
 import { Comment } from "./comment.type";
 
 export interface Post extends baseMongooseType {
-  id: string;
+  // id: string;
   title: string;
   text: string;
   user: User;
-  likes: User[];
-  comments: Comment[];
+  likes?: User[];
+  comments?: Comment[];
 }
 
 export interface PostState extends baseState {

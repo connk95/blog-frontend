@@ -8,8 +8,17 @@ import { Container } from "@mui/material";
 import { SignUp } from "./pages/SignUpPage";
 import { Login } from "./pages/LoginPage";
 import { NewPost } from "./pages/NewPost";
+import { useEffect } from "react";
+import { useAppDispatch } from "./redux/hooks";
+import { setLoggedInUser } from "./redux/auth/auth.actions";
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setLoggedInUser());
+  }, [dispatch]);
+
   return (
     // uses React Router v6
     <Router>

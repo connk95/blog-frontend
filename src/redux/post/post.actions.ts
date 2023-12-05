@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Post } from "./post.type";
 
 export const fetchSinglePost = createAsyncThunk(
   "posts/fetchSinglePost",
@@ -14,7 +15,20 @@ export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
   return res.data;
 });
 
-export const newPost = createAsyncThunk("posts/newPost", async (data) => {
-  const res = await axios.post("http://localhost:3000/posts", { data });
-  return res;
-});
+export const newPost = createAsyncThunk(
+  "posts/newPost",
+  async ({ title, text }: Post) => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      const loggedInUser = JSON.parse(user);
+      const res = await axios.post("http://localhost:3000/posts", {
+        title,
+        text,
+        user: loggedInUser.user,
+      });
+      return res;
+    } else {
+      return;
+    }
+  }
+);

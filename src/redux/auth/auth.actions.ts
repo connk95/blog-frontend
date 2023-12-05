@@ -11,6 +11,7 @@ export const userLogin = createAsyncThunk(
         username,
         password,
       });
+      localStorage.setItem("loggedInUser", JSON.stringify(res.data));
       console.log(res.data);
       return res.data;
     } catch (error) {
@@ -20,9 +21,23 @@ export const userLogin = createAsyncThunk(
   }
 );
 
+export const setLoggedInUser = createAsyncThunk(
+  "auth/setLoggedInUser",
+  async () => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      const loggedInUser = JSON.parse(user);
+      return loggedInUser;
+    } else {
+      return;
+    }
+  }
+);
+
 export const userLogout = createAsyncThunk(
   "auth/userLogout",
   async ({ username, password }: UserLoginData) => {
+    localStorage.removeItem("loggedInUser");
     try {
       const res = await axios.post("http://localhost:3000/auth/logout", {
         username,

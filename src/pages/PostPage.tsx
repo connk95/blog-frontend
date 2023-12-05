@@ -7,6 +7,8 @@ import {
   CircularProgress,
   TextField,
   Button,
+  Container,
+  Box,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
@@ -27,58 +29,76 @@ export const PostPage = (): JSX.Element => {
   }, [dispatch, id]);
 
   return (
-    <Grid container flexDirection="column" alignItems="center">
+    <Container component="main" maxWidth="md">
       {posts.loading ? (
         <CircularProgress />
       ) : posts.singlePost.title ? (
-        <Grid item>
-          <Card sx={{ p: 1, m: 2, width: "60vw" }}>
-            <CardContent>
-              <Typography sx={{ fontWeight: "bold" }}>
-                {posts.singlePost.title}
-              </Typography>
-              <Typography>{posts.singlePost.text}</Typography>
-              <Typography>
-                posted at {posts.singlePost.createdAt.slice(11, 19)} on{" "}
-                {posts.singlePost.createdAt.slice(0, 10)}
-              </Typography>
-              <Typography>by {posts.singlePost.user.username}</Typography>
-            </CardContent>
-          </Card>
-          {posts.singlePost.comments.length > 0 ? (
-            <Card sx={{ p: 1, m: 2, width: "60vw " }}>
-              {posts.singlePost.comments.map((comment) => (
-                <CardContent key={comment.id}>
-                  <Typography>{comment.text}</Typography>;
-                  <Typography>
-                    posted at {comment.createdAt.slice(11, 19)} on{" "}
-                    {comment.createdAt.slice(0, 10)}
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          component="form"
+          // onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography sx={{ fontWeight: "bold" }}>
+                    {posts.singlePost.title}
                   </Typography>
-                  ;
+                  <Typography>{posts.singlePost.text}</Typography>
+                  <Typography>
+                    posted at {posts.singlePost.createdAt.slice(11, 19)} on{" "}
+                    {posts.singlePost.createdAt.slice(0, 10)}
+                  </Typography>
+                  <Typography>by {posts.singlePost.user.username}</Typography>
                 </CardContent>
-              ))}
-            </Card>
-          ) : (
-            <Typography sx={{ mx: 2.5 }}>
-              Be the first to leave a comment!
-            </Typography>
-          )}
-          <Grid container direction={"column"} sx={{ alignItems: "flex-end" }}>
-            <TextField
-              id="outlined-basic"
-              label="Comment"
-              variant="outlined"
-              sx={{ m: 2, width: "61vw" }}
-            />
-            <Button variant="contained" sx={{ width: 90, mx: 2 }}>
-              Submit
-            </Button>
+              </Card>
+            </Grid>
+            {posts.singlePost.comments ? (
+              <Grid item>
+                <Card>
+                  {posts.singlePost.comments.map((comment) => (
+                    <CardContent key={comment.id}>
+                      <Typography>{comment.text}</Typography>;
+                      <Typography>
+                        posted at {comment.createdAt.slice(11, 19)} on{" "}
+                        {comment.createdAt.slice(0, 10)}
+                      </Typography>
+                      ;
+                    </CardContent>
+                  ))}
+                </Card>
+              </Grid>
+            ) : (
+              <Typography>Be the first to leave a comment!</Typography>
+            )}
+            <Grid item xs={12}>
+              <TextField
+                id="comment"
+                label="Comment"
+                variant="outlined"
+                fullWidth
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: 90, mt: 2 }}
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       ) : (
         <Typography>Post not found</Typography>
       )}
-    </Grid>
+    </Container>
   );
 };
 

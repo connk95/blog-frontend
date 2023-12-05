@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { userLogin, createUser, userLogout } from "./auth.actions";
+import {
+  userLogin,
+  createUser,
+  userLogout,
+  setLoggedInUser,
+} from "./auth.actions";
 import { User } from "../user/user.type";
 import { AuthState, NewUser, LoggedInUser } from "./auth.type";
 
@@ -22,7 +27,6 @@ const authSlice = createSlice({
         state.newUser = <User>{};
         state.error = "";
         state.loading = false;
-        console.log(state.loggedInUser);
       }
     );
     builder.addCase(userLogin.pending, (state) => {
@@ -74,6 +78,17 @@ const authSlice = createSlice({
       state.error = action.error.message || "Could not create user";
       state.loading = false;
     });
+    builder.addCase(
+      setLoggedInUser.fulfilled,
+      (state, action: PayloadAction<LoggedInUser>) => {
+        console.log("test auth slice loggedInUser");
+        console.log(action.payload);
+        state.loggedInUser = action.payload || <LoggedInUser>{};
+        state.newUser = <User>{};
+        state.error = "";
+        state.loading = false;
+      }
+    );
   },
 });
 

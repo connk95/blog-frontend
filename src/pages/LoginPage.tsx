@@ -13,12 +13,13 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch } from "../redux/hooks";
 import { useNavigate } from "react-router";
-import { RootState } from "../redux/store";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { userLogin } from "../redux/auth/auth.actions";
 import { useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
+
+import { RootState } from "../redux/store";
 import { UserLoginData } from "../redux/auth/auth.type";
+import { userLogin } from "../redux/auth/auth.actions";
 
 const defaultTheme = createTheme();
 
@@ -33,9 +34,6 @@ export const Login = (): JSX.Element => {
   } = useForm<UserLoginData>();
 
   const onSubmit: SubmitHandler<UserLoginData> = async (data) => {
-    // const { username, password } = data;
-    // console.log({ username, password });
-    console.log(data);
     await dispatch(userLogin(data));
     navigate("/");
   };
