@@ -81,8 +81,6 @@ const authSlice = createSlice({
     builder.addCase(
       setLoggedInUser.fulfilled,
       (state, action: PayloadAction<LoggedInUser>) => {
-        console.log("test auth slice loggedInUser");
-        console.log(action.payload);
         state.loggedInUser = action.payload || <LoggedInUser>{};
         state.newUser = <User>{};
         state.error = "";

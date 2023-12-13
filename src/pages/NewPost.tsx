@@ -30,7 +30,6 @@ export const NewPost = (): JSX.Element => {
 
   const onSubmit: SubmitHandler<Post> = async (data) => {
     await dispatch(newPost(data));
-    console.log(data);
     navigate("/");
   };
 
