@@ -34,13 +34,11 @@ export const newComment = createAsyncThunk(
   "posts/newComment",
   async ({ text, postId }: Comment, thunkApi) => {
     const state = thunkApi.getState() as RootState;
-    console.log(postId);
     const res = await axios.patch(`http://localhost:3000/posts/${postId}`, {
       postId,
       text,
       user: state.auth.loggedInUser.user,
     });
-    console.log(res);
     return res.data;
   }
 );

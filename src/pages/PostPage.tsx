@@ -15,7 +15,6 @@ import { useAppDispatch } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { fetchSinglePost } from "../redux/post/post.actions";
 import { useParams } from "react-router";
-// import { useNavigate } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { newComment } from "../redux/post/post.actions";
@@ -24,7 +23,6 @@ const defaultTheme = createTheme();
 
 export const PostPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
   const { id } = useParams();
   const posts = useSelector((state: RootState) => state.posts);
   const {
@@ -38,11 +36,7 @@ export const PostPage = (): JSX.Element => {
       text: data.comment,
       postId: id,
     };
-    console.log(commentData);
     await dispatch(newComment(commentData));
-    // dispatch(fetchSinglePost(id));
-
-    // navigate("/");
     window.location.reload();
   };
 
@@ -97,7 +91,6 @@ export const PostPage = (): JSX.Element => {
                   {posts.singlePost.comments.map((comment) => (
                     <Card sx={{ my: 1 }}>
                       <CardContent key={comment.id}>
-                        {console.log("comment: ", comment)}
                         <Typography sx={{ mb: 1 }}>{comment.text}</Typography>
                         <Typography sx={{ fontSize: 14 }}>
                           posted at {comment.createdAt.slice(11, 19)} on{" "}

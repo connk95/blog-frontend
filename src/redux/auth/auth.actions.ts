@@ -12,11 +12,9 @@ export const userLogin = createAsyncThunk(
         password,
       });
       localStorage.setItem("loggedInUser", JSON.stringify(res.data));
-      console.log(res.data);
       return res.data;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw { message: "Failed to log in", originalError: error };
     }
   }
 );
@@ -45,8 +43,7 @@ export const userLogout = createAsyncThunk(
       });
       return res;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw { message: "Failed to log in", originalError: error };
     }
   }
 );
