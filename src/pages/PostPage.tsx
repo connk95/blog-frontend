@@ -88,24 +88,27 @@ export const PostPage = (): JSX.Element => {
                   </CardContent>
                 </Card>
               </Grid>
-              {posts.singlePost.comments ? (
-                <Grid item>
+              {posts.singlePost.comments.length > 0 ? (
+                <Grid item xs={12}>
+                  <Typography sx={{ ml: 1, mb: 2 }}>Comments</Typography>
                   <Card>
                     {posts.singlePost.comments.map((comment) => (
                       <CardContent key={comment.id}>
                         {console.log("comment: ", comment)}
                         <Typography>{comment.text}</Typography>
-                        {/* <Typography>
+                        <Typography>
                           posted at {comment.createdAt.slice(11, 19)} on{" "}
                           {comment.createdAt.slice(0, 10)}
                         </Typography>
-                        ; */}
+                        <Typography>by {comment.user.username}</Typography>
                       </CardContent>
                     ))}
                   </Card>
                 </Grid>
               ) : (
-                <Typography>Be the first to leave a comment!</Typography>
+                <Typography sx={{ m: 2, ml: 3 }}>
+                  Be the first to leave a comment!
+                </Typography>
               )}
               <Grid item xs={12}>
                 <TextField
