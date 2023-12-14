@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+// import IconButton from "@mui/material/IconButton";
+// import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import { useAppDispatch } from "../redux/hooks";
@@ -29,10 +29,10 @@ export const ButtonAppBar = (): JSX.Element => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, mb: 2 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, mb: 12 }}>
+      <AppBar position="fixed">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -40,7 +40,7 @@ export const ButtonAppBar = (): JSX.Element => {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/"} style={{ color: "white" }}>
               Home

@@ -15,22 +15,16 @@ import { useAppDispatch } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { fetchSinglePost } from "../redux/post/post.actions";
 import { useParams } from "react-router";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { newComment } from "../redux/post/post.actions";
 
 const defaultTheme = createTheme();
 
-// interface CommentInput {
-//   text: string;
-//   user: string;
-//   postId: string;
-// }
-
 export const PostPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
   const posts = useSelector((state: RootState) => state.posts);
   const {
@@ -46,7 +40,10 @@ export const PostPage = (): JSX.Element => {
     };
     console.log(commentData);
     await dispatch(newComment(commentData));
-    navigate("/");
+    // dispatch(fetchSinglePost(id));
+
+    // navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -54,6 +51,8 @@ export const PostPage = (): JSX.Element => {
       dispatch(fetchSinglePost(id));
     }
   }, [dispatch, id]);
+
+  // useEffect(() => {}, [posts.singlePost.comments]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -76,34 +75,40 @@ export const PostPage = (): JSX.Element => {
               <Grid item xs={12}>
                 <Card>
                   <CardContent>
-                    <Typography sx={{ fontWeight: "bold" }}>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
                       {posts.singlePost.title}
                     </Typography>
-                    <Typography>{posts.singlePost.text}</Typography>
-                    <Typography>
+                    <Typography sx={{ my: 1 }}>
+                      {posts.singlePost.text}
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }}>
                       posted at {posts.singlePost.createdAt.slice(11, 19)} on{" "}
                       {posts.singlePost.createdAt.slice(0, 10)}
                     </Typography>
-                    <Typography>by {posts.singlePost.user.username}</Typography>
+                    <Typography sx={{ fontSize: 14 }}>
+                      by {posts.singlePost.user.username}
+                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>
               {posts.singlePost.comments.length > 0 ? (
                 <Grid item xs={12}>
                   <Typography sx={{ ml: 1, mb: 2 }}>Comments</Typography>
-                  <Card>
-                    {posts.singlePost.comments.map((comment) => (
+                  {posts.singlePost.comments.map((comment) => (
+                    <Card sx={{ my: 1 }}>
                       <CardContent key={comment.id}>
                         {console.log("comment: ", comment)}
-                        <Typography>{comment.text}</Typography>
-                        <Typography>
+                        <Typography sx={{ mb: 1 }}>{comment.text}</Typography>
+                        <Typography sx={{ fontSize: 14 }}>
                           posted at {comment.createdAt.slice(11, 19)} on{" "}
                           {comment.createdAt.slice(0, 10)}
                         </Typography>
-                        <Typography>by {comment.user.username}</Typography>
+                        <Typography sx={{ fontSize: 14 }}>
+                          by {comment.user.username}
+                        </Typography>
                       </CardContent>
-                    ))}
-                  </Card>
+                    </Card>
+                  ))}
                 </Grid>
               ) : (
                 <Typography sx={{ m: 2, ml: 3 }}>
@@ -133,7 +138,7 @@ export const PostPage = (): JSX.Element => {
                 <Button
                   type="submit"
                   variant="contained"
-                  sx={{ width: 90, mt: 2 }}
+                  sx={{ width: 90, mt: 2, mb: 10 }}
                 >
                   Submit
                 </Button>

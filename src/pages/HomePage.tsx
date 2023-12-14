@@ -46,13 +46,17 @@ export const HomePage = (): JSX.Element => {
         <Link to={`/posts/${post._id}`} key={post._id}>
           <Card sx={{ p: 1, m: 2, width: "60vw" }}>
             <CardContent>
-              <Typography sx={{ fontWeight: "bold" }}>{post.title}</Typography>
-              <Typography>{post.text}</Typography>
-              <Typography>
+              <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                {post.title}
+              </Typography>
+              <Typography sx={{ my: 1 }}>{post.text}</Typography>
+              <Typography sx={{ fontSize: 14 }}>
                 posted at {post.createdAt.slice(11, 19)} on{" "}
                 {post.createdAt.slice(0, 10)}
               </Typography>
-              <Typography>by {post.user.username}</Typography>
+              <Typography sx={{ fontSize: 14 }}>
+                by {post.user.username}
+              </Typography>
             </CardContent>
           </Card>
         </Link>
