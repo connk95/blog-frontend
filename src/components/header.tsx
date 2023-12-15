@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-// import IconButton from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton";
 // import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+// import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import { useAppDispatch } from "../redux/hooks";
@@ -32,28 +34,39 @@ export const ButtonAppBar = (): JSX.Element => {
     <Box sx={{ flexGrow: 1, mb: 12 }}>
       <AppBar position="fixed">
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/"} style={{ color: "white" }}>
               Home
             </Link>
+            {/* <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <AddCircleOutlineOutlinedIcon />
+            </IconButton> */}
           </Typography>
+
           {auth.loggedInUser.access_token ? (
             <>
               <Typography sx={{ mr: 4 }}>
                 Welcome back {auth.loggedInUser.user.username}!
               </Typography>
-              <Button color="inherit" href="/profile">
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                href="/profile"
+              >
+                <AccountCircleOutlinedIcon />
+              </IconButton>
+              {/* <Button color="inherit" href="/profile">
                 My Profile
-              </Button>
+              </Button> */}
               <Button color="inherit" href="/" onClick={onClick}>
                 Logout
               </Button>

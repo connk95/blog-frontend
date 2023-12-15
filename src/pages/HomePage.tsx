@@ -16,8 +16,8 @@ import { RootState } from "../redux/store";
 
 export const HomePage = (): JSX.Element => {
   const posts = useSelector((state: RootState) => state.posts);
-
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
@@ -51,7 +51,7 @@ export const HomePage = (): JSX.Element => {
               </Typography>
               <Typography sx={{ my: 1 }}>{post.text}</Typography>
               <Typography sx={{ fontSize: 14 }}>
-                posted at {post.createdAt.slice(11, 19)} on{" "}
+                posted at {post.createdAt.slice(11, 16)} on{" "}
                 {post.createdAt.slice(0, 10)}
               </Typography>
               <Typography sx={{ fontSize: 14 }}>

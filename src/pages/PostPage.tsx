@@ -76,7 +76,7 @@ export const PostPage = (): JSX.Element => {
                       {posts.singlePost.text}
                     </Typography>
                     <Typography sx={{ fontSize: 14 }}>
-                      posted at {posts.singlePost.createdAt.slice(11, 19)} on{" "}
+                      posted at {posts.singlePost.createdAt.slice(11, 16)} on{" "}
                       {posts.singlePost.createdAt.slice(0, 10)}
                     </Typography>
                     <Typography sx={{ fontSize: 14 }}>
@@ -93,7 +93,7 @@ export const PostPage = (): JSX.Element => {
                       <CardContent key={comment.id}>
                         <Typography sx={{ mb: 1 }}>{comment.text}</Typography>
                         <Typography sx={{ fontSize: 14 }}>
-                          posted at {comment.createdAt.slice(11, 19)} on{" "}
+                          posted at {comment.createdAt.slice(11, 16)} on{" "}
                           {comment.createdAt.slice(0, 10)}
                         </Typography>
                         <Typography sx={{ fontSize: 14 }}>

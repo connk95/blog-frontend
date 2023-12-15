@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import Header from "./components/header";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
+import UserPage from "./pages/UserPage";
 import { store } from "./redux/store";
 import { Container } from "@mui/material";
 import { SignUp } from "./pages/SignUpPage";
@@ -20,13 +21,13 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    // uses React Router v6
     <Router>
       <Provider store={store}>
         <Header />
         <Container maxWidth={false} sx={{ height: "100vh", width: "100vw" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="profile" element={<UserPage />} />
             <Route path="posts/:id" element={<PostPage />} />
             <Route path="posts/new" element={<NewPost />} />
             <Route path="/signup" element={<SignUp />} />
