@@ -12,9 +12,14 @@ import { NewPost } from "./pages/NewPost";
 import { useEffect } from "react";
 import { useAppDispatch } from "./redux/hooks";
 import { setLoggedInUser } from "./redux/auth/auth.actions";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store";
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const auth = useSelector((state: RootState) => state.auth);
+
+  console.log(auth);
 
   useEffect(() => {
     dispatch(setLoggedInUser());
@@ -27,11 +32,11 @@ const App = () => {
         <Container maxWidth={false} sx={{ height: "100vh", width: "100vw" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="profile" element={<UserPage />} />
-            <Route path="posts/:id" element={<PostPage />} />
-            <Route path="posts/new" element={<NewPost />} />
+            <Route path="/posts/:id" element={<PostPage />} />
+            <Route path="/posts/new" element={<NewPost />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<UserPage />} />
           </Routes>
         </Container>
       </Provider>

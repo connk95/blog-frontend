@@ -22,7 +22,7 @@ export const userLogin = createAsyncThunk(
 export const setLoggedInUser = createAsyncThunk(
   "auth/setLoggedInUser",
   async () => {
-    const user = localStorage.getItem("loggedInUser");
+    const user = await localStorage.getItem("loggedInUser");
     if (user) {
       const loggedInUser = JSON.parse(user);
       return loggedInUser;

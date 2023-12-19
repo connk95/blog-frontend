@@ -31,6 +31,10 @@ export const PostPage = (): JSX.Element => {
     formState: { errors },
   } = useForm<Comment>();
 
+  const auth = useSelector((state: RootState) => state.auth);
+
+  console.log(auth);
+
   const onSubmit: SubmitHandler<Comment> = async (data) => {
     const commentData = {
       text: data.comment,
@@ -45,8 +49,6 @@ export const PostPage = (): JSX.Element => {
       dispatch(fetchSinglePost(id));
     }
   }, [dispatch, id]);
-
-  // useEffect(() => {}, [posts.singlePost.comments]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -69,7 +71,7 @@ export const PostPage = (): JSX.Element => {
               <Grid item xs={12}>
                 <Card>
                   <CardContent>
-                    <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
                       {posts.singlePost.title}
                     </Typography>
                     <Typography sx={{ my: 1 }}>
@@ -88,8 +90,8 @@ export const PostPage = (): JSX.Element => {
               {posts.singlePost.comments.length > 0 ? (
                 <Grid item xs={12}>
                   <Typography sx={{ ml: 1, mb: 2 }}>Comments</Typography>
-                  {posts.singlePost.comments.map((comment) => (
-                    <Card sx={{ my: 1 }}>
+                  {posts.singlePost.comments.toReversed().map((comment) => (
+                    <Card key={comment._id} sx={{ my: 1 }}>
                       <CardContent key={comment.id}>
                         <Typography sx={{ mb: 1 }}>{comment.text}</Typography>
                         <Typography sx={{ fontSize: 14 }}>

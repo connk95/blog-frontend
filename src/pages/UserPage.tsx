@@ -1,30 +1,40 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-// import { useAppDispatch } from "../redux/hooks";
 import {
   Card,
   CardContent,
   Grid,
   Typography,
   CircularProgress,
-  // TextField,
-  // Button,
   Container,
   Box,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { fetchUser } from "../redux/user/user.actions";
+import { useEffect } from "react";
+import { useAppDispatch } from "../redux/hooks";
 
 const defaultTheme = createTheme();
 
 export const UserPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const auth = useSelector((state: RootState) => state.auth);
-  // const dispatch = useAppDispatch();
-  console.log(auth);
+  const user = useSelector((state: RootState) => state.users);
+
+  useEffect(() => {
+    if (auth.loggedInUser.access_token) {
+      const userId = auth.loggedInUser.user._id;
+      if (userId) {
+        dispatch(fetchUser(userId));
+      }
+    }
+  }, [dispatch, auth]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="md">
-        {auth.loading ? (
+        {!user.user._id ? (
           <CircularProgress />
         ) : (
           <Box
@@ -32,52 +42,68 @@ export const UserPage = (): JSX.Element => {
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center,",
+              alignItems: "center",
             }}
           >
             <Grid container spacing={2}>
-              <Card>
-                <CardContent>
-                  <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-                    Username
-                  </Typography>
-                  <Typography>{auth.loggedInUser.user.username}</Typography>
-                </CardContent>
-              </Card>
-              {auth.loggedInUser.user.posts.length > 0 ? (
+              <Grid item xs={12}>
                 <Card>
-                  {auth.loggedInUser.user.posts.map((post) => (
+                  <CardContent>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                      Username
+                    </Typography>
+                    <Typography>{user.user.username}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              {user.user.posts ? (
+                <Grid item xs={12}>
+                  <Typography
+                    sx={{ fontWeight: "bold", fontSize: 20, ml: 2, mt: 2 }}
+                  >
+                    Posts
+                  </Typography>
+                  {user.user.posts.toReversed().map((post) => (
                     <Link to={`/posts/${post._id}`} key={post._id}>
-                      <CardContent>
-                        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-                          {post.title}
-                        </Typography>
-                        <Typography sx={{ my: 1 }}>{post.text}</Typography>
-                        <Typography sx={{ fontSize: 14 }}>
-                          posted at {post.createdAt.slice(11, 16)} on{" "}
-                          {post.createdAt.slice(0, 10)}
-                        </Typography>
-                      </CardContent>
+                      <Card sx={{ my: 1 }}>
+                        <CardContent>
+                          <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
+                            {post.title}
+                          </Typography>
+                          <Typography sx={{ my: 1 }}>{post.text}</Typography>
+                          <Typography sx={{ fontSize: 14 }}>
+                            posted at {post.createdAt.slice(11, 16)} on{" "}
+                            {post.createdAt.slice(0, 10)}
+                          </Typography>
+                        </CardContent>
+                      </Card>
                     </Link>
                   ))}
-                </Card>
+                </Grid>
               ) : (
                 <></>
               )}
-              {auth.loggedInUser.user.comments.length > 0 ? (
-                <Card>
-                  {auth.loggedInUser.user.comments.map((comment) => (
-                    <Link to={`/posts/${comment._id}`} key={comment._id}>
-                      <CardContent>
-                        <Typography sx={{ my: 1 }}>{comment.text}</Typography>
-                        <Typography sx={{ fontSize: 14 }}>
-                          posted at {comment.createdAt.slice(11, 16)} on{" "}
-                          {comment.createdAt.slice(0, 10)}
-                        </Typography>
-                      </CardContent>
+              {user.user.comments ? (
+                <Grid item xs={12}>
+                  <Typography
+                    sx={{ fontWeight: "bold", fontSize: 20, ml: 2, mt: 2 }}
+                  >
+                    Comments
+                  </Typography>
+                  {user.user.comments.map((comment) => (
+                    <Link to={`/posts/${comment.postId}`} key={comment._id}>
+                      <Card sx={{ my: 1 }}>
+                        <CardContent key={comment._id}>
+                          <Typography sx={{ my: 1 }}>{comment.text}</Typography>
+                          <Typography sx={{ fontSize: 14 }}>
+                            posted at {comment.createdAt.slice(11, 16)} on{" "}
+                            {comment.createdAt.slice(0, 10)}
+                          </Typography>
+                        </CardContent>
+                      </Card>
                     </Link>
                   ))}
-                </Card>
+                </Grid>
               ) : (
                 <></>
               )}

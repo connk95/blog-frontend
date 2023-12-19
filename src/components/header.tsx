@@ -4,17 +4,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-// import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-// import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import { useAppDispatch } from "../redux/hooks";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/hooks";
 import { userLogout } from "../redux/auth/auth.actions";
-// import { useEffect } from "react";
 
 export const ButtonAppBar = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -38,17 +34,7 @@ export const ButtonAppBar = (): JSX.Element => {
             <Link to={"/"} style={{ color: "white" }}>
               Home
             </Link>
-            {/* <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <AddCircleOutlineOutlinedIcon />
-            </IconButton> */}
           </Typography>
-
           {auth.loggedInUser.access_token ? (
             <>
               <Typography sx={{ mr: 4 }}>
@@ -64,9 +50,6 @@ export const ButtonAppBar = (): JSX.Element => {
               >
                 <AccountCircleOutlinedIcon />
               </IconButton>
-              {/* <Button color="inherit" href="/profile">
-                My Profile
-              </Button> */}
               <Button color="inherit" href="/" onClick={onClick}>
                 Logout
               </Button>
