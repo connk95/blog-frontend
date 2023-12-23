@@ -19,7 +19,6 @@ export const fetchUser = createAsyncThunk(
   async (id: string) => {
     console.log("test get user, id: ", id);
     const res = await axios.get(`http://localhost:3000/users/${id}`);
-    console.log(res);
     return res.data;
   }
 );

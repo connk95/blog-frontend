@@ -11,10 +11,12 @@ export const userLogin = createAsyncThunk(
         username,
         password,
       });
-      localStorage.setItem("loggedInUser", JSON.stringify(res.data));
-      return res.data;
+      if (res.data) {
+        localStorage.setItem("loggedInUser", JSON.stringify(res.data));
+        return res.data;
+      }
     } catch (error) {
-      throw { message: "Failed to log in", originalError: error };
+      throw new Error("Invalid username or password. Please try again");
     }
   }
 );

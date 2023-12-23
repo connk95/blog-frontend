@@ -13,27 +13,26 @@ import {
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/hooks";
 import { RootState } from "../redux/store";
+import { Linkify } from "../utils/utilities";
 import { fetchSinglePost } from "../redux/post/post.actions";
 import { useParams } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { newComment } from "../redux/post/post.actions";
+import { theme } from "../styles/theme";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(theme);
 
 export const PostPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const posts = useSelector((state: RootState) => state.posts);
+  const auth = useSelector((state: RootState) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Comment>();
-
-  const auth = useSelector((state: RootState) => state.auth);
-
-  console.log(auth);
 
   const onSubmit: SubmitHandler<Comment> = async (data) => {
     const commentData = {
@@ -52,7 +51,7 @@ export const PostPage = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" sx={{ mt: 12 }}>
         {posts.loading ? (
           <CircularProgress />
         ) : posts.singlePost.title ? (
@@ -74,9 +73,7 @@ export const PostPage = (): JSX.Element => {
                     <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
                       {posts.singlePost.title}
                     </Typography>
-                    <Typography sx={{ my: 1 }}>
-                      {posts.singlePost.text}
-                    </Typography>
+                    <Linkify sx={{ my: 1 }}>{posts.singlePost.text}</Linkify>
                     <Typography sx={{ fontSize: 14 }}>
                       posted at {posts.singlePost.createdAt.slice(11, 16)} on{" "}
                       {posts.singlePost.createdAt.slice(0, 10)}
@@ -93,7 +90,7 @@ export const PostPage = (): JSX.Element => {
                   {posts.singlePost.comments.toReversed().map((comment) => (
                     <Card key={comment._id} sx={{ my: 1 }}>
                       <CardContent key={comment.id}>
-                        <Typography sx={{ mb: 1 }}>{comment.text}</Typography>
+                        <Linkify sx={{ mb: 1 }}>{comment.text}</Linkify>
                         <Typography sx={{ fontSize: 14 }}>
                           posted at {comment.createdAt.slice(11, 16)} on{" "}
                           {comment.createdAt.slice(0, 10)}
@@ -110,34 +107,38 @@ export const PostPage = (): JSX.Element => {
                   Be the first to leave a comment!
                 </Typography>
               )}
-              <Grid item xs={12}>
-                <TextField
-                  {...register("comment", {
-                    required: "Please add a comment and try again",
-                    maxLength: {
-                      value: 240,
-                      message:
-                        "Comments cannot exceed 240 characters in length",
-                    },
-                  })}
-                  id="comment"
-                  label="Comment"
-                  variant="outlined"
-                  fullWidth
-                />
-                {errors.comment && (
-                  <Typography variant="caption" color="error">
-                    {errors.comment.message}
-                  </Typography>
-                )}
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: 90, mt: 2, mb: 10 }}
-                >
-                  Submit
-                </Button>
-              </Grid>
+              {auth.loggedInUser.access_token ? (
+                <Grid item xs={12}>
+                  <TextField
+                    {...register("comment", {
+                      required: "Please add a comment and try again",
+                      maxLength: {
+                        value: 240,
+                        message:
+                          "Comments cannot exceed 240 characters in length",
+                      },
+                    })}
+                    id="comment"
+                    label="Comment"
+                    variant="outlined"
+                    fullWidth
+                  />
+                  {errors.comment && (
+                    <Typography variant="caption" color="error">
+                      {errors.comment.message}
+                    </Typography>
+                  )}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{ width: 90, mt: 2, mb: 10 }}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              ) : (
+                <></>
+              )}
             </Grid>
           </Box>
         ) : (

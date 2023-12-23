@@ -14,8 +14,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { fetchUser } from "../redux/user/user.actions";
 import { useEffect } from "react";
 import { useAppDispatch } from "../redux/hooks";
+import { Linkify } from "../utils/utilities";
+import { theme } from "../styles/theme";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(theme);
 
 export const UserPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -33,7 +35,7 @@ export const UserPage = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" sx={{ mt: 12 }}>
         {!user.user._id ? (
           <CircularProgress />
         ) : (
@@ -70,7 +72,7 @@ export const UserPage = (): JSX.Element => {
                           <Typography sx={{ fontWeight: "bold", fontSize: 18 }}>
                             {post.title}
                           </Typography>
-                          <Typography sx={{ my: 1 }}>{post.text}</Typography>
+                          <Linkify sx={{ my: 1 }}>{post.text}</Linkify>
                           <Typography sx={{ fontSize: 14 }}>
                             posted at {post.createdAt.slice(11, 16)} on{" "}
                             {post.createdAt.slice(0, 10)}
@@ -84,7 +86,7 @@ export const UserPage = (): JSX.Element => {
                 <></>
               )}
               {user.user.comments ? (
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ mb: 8 }}>
                   <Typography
                     sx={{ fontWeight: "bold", fontSize: 20, ml: 2, mt: 2 }}
                   >
@@ -94,7 +96,7 @@ export const UserPage = (): JSX.Element => {
                     <Link to={`/posts/${comment.postId}`} key={comment._id}>
                       <Card sx={{ my: 1 }}>
                         <CardContent key={comment._id}>
-                          <Typography sx={{ my: 1 }}>{comment.text}</Typography>
+                          <Linkify sx={{ my: 1 }}>{comment.text}</Linkify>
                           <Typography sx={{ fontSize: 14 }}>
                             posted at {comment.createdAt.slice(11, 16)} on{" "}
                             {comment.createdAt.slice(0, 10)}

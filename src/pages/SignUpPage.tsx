@@ -16,8 +16,9 @@ import { RootState } from "../redux/store";
 import { CircularProgress } from "@mui/material";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { theme } from "../styles/theme";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(theme);
 
 interface SignUpFormInput {
   username: string;
@@ -37,12 +38,12 @@ export const SignUp = (): JSX.Element => {
 
   const onSubmit: SubmitHandler<SignUpFormInput> = async (data) => {
     await dispatch(createUser(data));
-    navigate("/");
+    navigate("/home");
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ mt: 12 }}>
         <CssBaseline />
         {(!user.error || !user.loading) && (
           <Box

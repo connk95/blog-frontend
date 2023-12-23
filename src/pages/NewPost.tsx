@@ -15,13 +15,15 @@ import { useNavigate } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Post } from "../redux/post/post.type";
 import { newPost } from "../redux/post/post.actions";
+import { theme } from "../styles/theme";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(theme);
 
 export const NewPost = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const posts = useSelector((state: RootState) => state.posts);
+  const auth = useSelector((state: RootState) => state.auth);
   const {
     register,
     handleSubmit,
@@ -35,10 +37,10 @@ export const NewPost = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="md">
+      <Container component="main" maxWidth="md" sx={{ mt: 12 }}>
         {posts.loading ? (
           <CircularProgress />
-        ) : (
+        ) : auth.loggedInUser.access_token ? (
           <Box
             sx={{
               marginTop: 8,
@@ -104,6 +106,8 @@ export const NewPost = (): JSX.Element => {
               </Grid>
             </Grid>
           </Box>
+        ) : (
+          <Typography>Please sign in to make a post.</Typography>
         )}
       </Container>
     </ThemeProvider>
