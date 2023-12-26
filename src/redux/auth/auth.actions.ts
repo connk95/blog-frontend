@@ -45,7 +45,7 @@ export const userLogout = createAsyncThunk(
       });
       return res;
     } catch (error) {
-      throw { message: "Failed to log in", originalError: error };
+      throw new Error("Failed to logout. Please try again");
     }
   }
 );

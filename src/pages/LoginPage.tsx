@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch } from "../redux/hooks";
 import { useNavigate } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,9 +17,6 @@ import { RootState } from "../redux/store";
 import { UserLoginData } from "../redux/auth/auth.type";
 import { userLogin } from "../redux/auth/auth.actions";
 import { useEffect, useState } from "react";
-import { theme } from "../styles/theme";
-
-const defaultTheme = createTheme(theme);
 
 export const Login = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -36,14 +32,12 @@ export const Login = (): JSX.Element => {
   const onSubmit: SubmitHandler<UserLoginData> = async (data) => {
     try {
       await dispatch(userLogin(data));
-      console.log(auth);
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
         setErrorMessage("Invalid username or password. Please try again");
       }
-      setTimeout(() => window.location.reload(), 3000);
     }
   };
 
@@ -56,89 +50,85 @@ export const Login = (): JSX.Element => {
   }, [auth.loggedInUser.access_token, auth.error, navigate]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs" sx={{ mt: 12 }}>
-        <CssBaseline />
-        {(!auth.error || !auth.loading) && (
+    <Container component="main" maxWidth="xs" sx={{ mt: 12 }}>
+      <CssBaseline />
+      {(!auth.error || !auth.loading) && (
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {auth.error && !errorMessage && <Typography>{auth.error}</Typography>}
+          {auth.loading && <CircularProgress />}
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          {errorMessage && (
+            <Typography color="error">{errorMessage}</Typography>
+          )}
           <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            {auth.error && !errorMessage && (
-              <Typography>{auth.error}</Typography>
+            <TextField
+              {...register("username")}
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+            {errors.username && (
+              <Typography variant="caption" color="error">
+                {errors.username.message}
+              </Typography>
             )}
-            {auth.loading && <CircularProgress />}
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            {errorMessage && (
-              <Typography color="error">{errorMessage}</Typography>
+            <TextField
+              {...register("password")}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            {errors.password && (
+              <Typography variant="caption" color="error">
+                {errors.password.message}
+              </Typography>
             )}
-            <Box
-              component="form"
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-              sx={{ mt: 1 }}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
             >
-              <TextField
-                {...register("username")}
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-              />
-              {errors.username && (
-                <Typography variant="caption" color="error">
-                  {errors.username.message}
-                </Typography>
-              )}
-              <TextField
-                {...register("password")}
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              {errors.password && (
-                <Typography variant="caption" color="error">
-                  {errors.password.message}
-                </Typography>
-              )}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs></Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs></Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
               </Grid>
-            </Box>
+            </Grid>
           </Box>
-        )}
-      </Container>
-    </ThemeProvider>
+        </Box>
+      )}
+    </Container>
   );
 };

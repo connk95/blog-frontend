@@ -12,6 +12,10 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./redux/hooks";
 import { setLoggedInUser } from "./redux/auth/auth.actions";
 import SplashPage from "./pages/SplashPage";
+import { theme } from "./styles/theme";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const defaultTheme = createTheme(theme);
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -21,21 +25,23 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <Router>
-      <Provider store={store}>
-        <Header />
-        {location.pathname == "/" ? <Header /> : null}
-        <Routes>
-          <Route path="/" element={<SplashPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/posts/:id" element={<PostPage />} />
-          <Route path="/posts/new" element={<NewPost />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<UserPage />} />
-        </Routes>
-      </Provider>
-    </Router>
+    <ThemeProvider theme={defaultTheme}>
+      <Router>
+        <Provider store={store}>
+          <Header />
+          {location.pathname == "/" ? <Header /> : null}
+          <Routes>
+            <Route path="/" element={<SplashPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/posts/:id" element={<PostPage />} />
+            <Route path="/posts/new" element={<NewPost />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<UserPage />} />
+          </Routes>
+        </Provider>
+      </Router>
+    </ThemeProvider>
   );
 };
 
