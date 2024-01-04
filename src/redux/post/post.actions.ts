@@ -2,16 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Post } from "./post.type";
 import { Comment } from "./comment.type";
-// import { RootState } from "../store";
 
-// Define a generic type for the state
 type GenericState = {
   auth: {
     loggedInUser: {
-      user: string; // Adjust this type based on your actual user structure
+      user: string;
     };
   };
-  // Add other slices of your state as needed
 };
 
 export const fetchSinglePost = createAsyncThunk(

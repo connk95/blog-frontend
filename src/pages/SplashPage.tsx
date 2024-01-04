@@ -12,7 +12,7 @@ const images = [Img1, Img2, Img3, Img4, Img5];
 
 export const SplashPage = (): JSX.Element => {
   const auth = useSelector((state: RootState) => state.auth);
-  const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const changeImage = () => {
     const randomNumber = Math.floor(Math.random() * images.length);
