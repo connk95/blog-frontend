@@ -53,7 +53,7 @@ export const HomePage = (): JSX.Element => {
             )}
           </Grid>
           {posts.loading ? <CircularProgress sx={{ mt: 6 }} /> : <></>}
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ mb: 10 }}>
             {posts.allPosts.toReversed().map((post) => (
               <Link to={`/posts/${post._id}`} key={post._id}>
                 <Card sx={{ my: 1 }}>
