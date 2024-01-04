@@ -2,7 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Post } from "./post.type";
 import { Comment } from "./comment.type";
-import { RootState } from "../store";
+
+type GenericState = {
+  auth: {
+    loggedInUser: {
+      user: string;
+    };
+  };
+};
 
 export const fetchSinglePost = createAsyncThunk(
   "posts/fetchSinglePost",
@@ -20,7 +27,7 @@ export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
 export const newPost = createAsyncThunk(
   "posts/newPost",
   async ({ title, text }: Post, thunkApi) => {
-    const state = thunkApi.getState() as RootState;
+    const state = thunkApi.getState() as GenericState;
     const res = await axios.post("http://localhost:3000/posts", {
       title,
       text,
@@ -33,14 +40,12 @@ export const newPost = createAsyncThunk(
 export const newComment = createAsyncThunk(
   "posts/newComment",
   async ({ text, postId }: Comment, thunkApi) => {
-    const state = thunkApi.getState() as RootState;
-    console.log(postId);
+    const state = thunkApi.getState() as GenericState;
     const res = await axios.patch(`http://localhost:3000/posts/${postId}`, {
       postId,
       text,
       user: state.auth.loggedInUser.user,
     });
-    console.log(res);
     return res.data;
   }
 );

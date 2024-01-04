@@ -11,12 +11,12 @@ export const userLogin = createAsyncThunk(
         username,
         password,
       });
-      localStorage.setItem("loggedInUser", JSON.stringify(res.data));
-      console.log(res.data);
-      return res.data;
+      if (res.data) {
+        localStorage.setItem("loggedInUser", JSON.stringify(res.data));
+        return res.data;
+      }
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new Error("Invalid username or password. Please try again");
     }
   }
 );
@@ -24,7 +24,7 @@ export const userLogin = createAsyncThunk(
 export const setLoggedInUser = createAsyncThunk(
   "auth/setLoggedInUser",
   async () => {
-    const user = localStorage.getItem("loggedInUser");
+    const user = await localStorage.getItem("loggedInUser");
     if (user) {
       const loggedInUser = JSON.parse(user);
       return loggedInUser;
@@ -45,8 +45,7 @@ export const userLogout = createAsyncThunk(
       });
       return res;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new Error("Failed to logout. Please try again");
     }
   }
 );

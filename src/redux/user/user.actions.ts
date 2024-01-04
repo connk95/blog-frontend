@@ -2,11 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "./user.type";
 
-export const fetchUser = createAsyncThunk("users/fetchUser", async () => {
-  const res = await axios.get("http://localhost:3000/users");
-  return res.data;
-});
-
 export const createUser = createAsyncThunk(
   "users/createUser",
   async ({ username, email, password }: User) => {
@@ -15,6 +10,14 @@ export const createUser = createAsyncThunk(
       email,
       password,
     });
+    return res.data;
+  }
+);
+
+export const fetchUser = createAsyncThunk(
+  "users/getUser",
+  async (id: string) => {
+    const res = await axios.get(`http://localhost:3000/users/${id}`);
     return res.data;
   }
 );
