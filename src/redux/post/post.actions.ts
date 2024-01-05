@@ -14,13 +14,13 @@ type GenericState = {
 export const fetchSinglePost = createAsyncThunk(
   "posts/fetchSinglePost",
   async (id: string) => {
-    const res = await axios.get(`http://localhost:3000/posts/${id}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${id}`);
     return res.data;
   }
 );
 
 export const fetchPosts = createAsyncThunk("posts/fetchAllPosts", async () => {
-  const res = await axios.get("http://localhost:3000/posts");
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`);
   return res.data;
 });
 
@@ -28,7 +28,7 @@ export const newPost = createAsyncThunk(
   "posts/newPost",
   async ({ title, text }: Post, thunkApi) => {
     const state = thunkApi.getState() as GenericState;
-    const res = await axios.post("http://localhost:3000/posts", {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/posts`, {
       title,
       text,
       user: state.auth.loggedInUser.user,
@@ -41,11 +41,14 @@ export const newComment = createAsyncThunk(
   "posts/newComment",
   async ({ text, postId }: Comment, thunkApi) => {
     const state = thunkApi.getState() as GenericState;
-    const res = await axios.patch(`http://localhost:3000/posts/${postId}`, {
-      postId,
-      text,
-      user: state.auth.loggedInUser.user,
-    });
+    const res = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/posts/${postId}`,
+      {
+        postId,
+        text,
+        user: state.auth.loggedInUser.user,
+      }
+    );
     return res.data;
   }
 );

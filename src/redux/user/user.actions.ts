@@ -5,7 +5,7 @@ import { User } from "./user.type";
 export const createUser = createAsyncThunk(
   "users/createUser",
   async ({ username, email, password }: User) => {
-    const res = await axios.post("http://localhost:3000/users", {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
       username,
       email,
       password,
@@ -17,7 +17,7 @@ export const createUser = createAsyncThunk(
 export const fetchUser = createAsyncThunk(
   "users/getUser",
   async (id: string) => {
-    const res = await axios.get(`http://localhost:3000/users/${id}`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/${id}`);
     return res.data;
   }
 );

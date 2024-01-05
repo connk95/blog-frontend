@@ -7,10 +7,13 @@ export const userLogin = createAsyncThunk(
   "auth/userLogin",
   async ({ username, password }: UserLoginData) => {
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
+          username,
+          password,
+        }
+      );
       if (res.data) {
         localStorage.setItem("loggedInUser", JSON.stringify(res.data));
         return res.data;
@@ -39,10 +42,13 @@ export const userLogout = createAsyncThunk(
   async ({ username, password }: UserLoginData) => {
     localStorage.removeItem("loggedInUser");
     try {
-      const res = await axios.post("http://localhost:3000/auth/logout", {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        {
+          username,
+          password,
+        }
+      );
       return res;
     } catch (error) {
       throw new Error("Failed to logout. Please try again");
@@ -53,7 +59,7 @@ export const userLogout = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "auth/createUser",
   async ({ username, email, password }: User) => {
-    const res = await axios.post("http://localhost:3000/users", {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
       username,
       email,
       password,
